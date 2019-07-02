@@ -2,6 +2,7 @@ from keras.datasets import mnist
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
+import sys
 
 class kNN:
     _dists = []
@@ -48,9 +49,7 @@ def main():
             label = model.predict(test_img[i], i)
             if test_l[i] == label:
                 match_count += match_count + 1
-            if i % (test_img.shape[0]/100) == 0:
-                print("")
-            print("*", end="")
+            sys.stdout.write('\r'+'{}%'.format(i/test_img.shape[0]))
 
         # show img complete parsent    
         print("error rate:", 1 - match_count / test_img.shape[0])
