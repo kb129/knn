@@ -43,18 +43,18 @@ def main():
 
     # learning process
     for k in range(1, test_img.shape[0]):
-        match_count = 0
+        error_count = 0
         # create model
         print("{} NN start".format(k))
         for i in range(0, test_img.shape[0]):
             label = model.predict(k, test_img[i], i)
             if test_l[i] == label:
-                match_count += match_count + 1
+                error_count += error_count + 1
             sys.stdout.write('\r'+'{}%        '.format(i/test_img.shape[0]))
 
         print("")
         # show img complete parsent
-        print("error rate:", 1 - match_count / test_img.shape[0])
+        print("error rate:{}".format(error_count / test_img.shape[0]))
 
 if __name__ == '__main__':
     main()
