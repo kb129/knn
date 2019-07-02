@@ -6,22 +6,21 @@ import sys
 
 class kNN:
     _dists = []
-    def __init__(self, k, train_img, train_l):
+    def __init__(self, train_img, train_l):
         self._train_img = train_img
         self._train_l = train_l
-        self._k = k
     
     def _dist(self, p, q):
         # Euclidean distance
         return np.linalg.norm(p-q, ord=2)
 
-    def predict(self, x, i):
+    def predict(self, k, x, i):
         # make dists table
         if len(self._dists) < i+1:
             self._dists.append(np.array([self._dist(np.ravel(j), np.ravel(x)) for j in self._train_img]))
 
         # sort
-        nearest_indexes = self._dists[i].argsort()[:self._k]
+        nearest_indexes = self._dists[i].argsort()[:k]
         nearest_labels = self._train_l[nearest_indexes]
         
         c = Counter(nearest_labels)
@@ -39,19 +38,22 @@ def main():
     print("test img num   :", test_img.shape)
     print("test label num :", test_l.shape)
 
-    # learn process
+    # make instance
+    model = kNN(train_img, train_l)
+
+    # learning process
     for k in range(1, test_img.shape[0]):
         match_count = 0
         # create model
-        model = kNN(k, train_img, train_l)
         print("{} NN start".format(k))
         for i in range(0, test_img.shape[0]):
-            label = model.predict(test_img[i], i)
+            label = model.predict(k, test_img[i], i)
             if test_l[i] == label:
                 match_count += match_count + 1
             sys.stdout.write('\r'+'{}%'.format(i/test_img.shape[0]))
 
-        # show img complete parsent    
+        print("")
+        # show img complete parsent
         print("error rate:", 1 - match_count / test_img.shape[0])
 
 if __name__ == '__main__':
