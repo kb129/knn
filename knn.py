@@ -48,13 +48,13 @@ def main():
         print("{} NN start".format(k))
         for i in range(0, test_img.shape[0]):
             label = model.predict(k, test_img[i], i)
-            if test_l[i] == label:
-                error_count += error_count + 1
+            if test_l[i] != label:
+                error_count = error_count + 1
             sys.stdout.write('\r'+'{}%        '.format(100 * i/test_img.shape[0]))
 
         print("")
         # show img complete parsent
-        print("error rate:{}".format(error_count / test_img.shape[0]))
+        print("error rate:{}".format(error_count/test_img.shape[0]))
 
 if __name__ == '__main__':
     main()
