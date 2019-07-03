@@ -50,7 +50,7 @@ def main():
             label = model.predict(k, test_img[i], i)
             if test_l[i] != label:
                 error_count = error_count + 1
-            sys.stdout.write('\r'+'{}%        '.format(100 * i/test_img.shape[0]))
+            sys.stdout.write('\r{}%        '.format(100 * i/test_img.shape[0]))
 
         print("")
         # show img complete parsent
