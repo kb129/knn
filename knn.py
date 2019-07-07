@@ -20,7 +20,7 @@ class kNN:
             self._dists.append(np.array([self._dist(np.ravel(j), np.ravel(x)) for j in self._train_img]))
 
         # sort
-        nearest_indexes = self._dists[i].argsort()[:k]
+        nearest_indexes = self._dists[i].argsort()[-k:]
         nearest_labels = self._train_l[nearest_indexes]
         
         c = Counter(nearest_labels)
